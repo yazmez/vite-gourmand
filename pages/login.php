@@ -32,6 +32,7 @@ require_once '../includes/nav.php';
                 </div>
                 <button type="submit" class="btn btn-success w-100">Se connecter</button>
                 <p class="mt-3 text-center">Pas encore de compte ? <a href="/vite-gourmand/pages/register.php">S'inscrire</a></p>
+                <p class="mt-2 text-center"><a href="/vite-gourmand/pages/forgot-password.php">Mot de passe oublié ?</a></p>
             </form>
         </div>
     </div>
