@@ -17,7 +17,10 @@
                 </li>
                 <?php if(isset($_SESSION['user'])): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/vite-gourmand/espaces/<?= $_SESSION['user']['role'] ?>/dashboard.php">Mon Espace</a>
+                        <?php
+$roleFolder = $_SESSION['user']['role'] === 'administrateur' ? 'admin' : $_SESSION['user']['role'];
+?>
+<a class="nav-link" href="/vite-gourmand/espaces/<?= $roleFolder ?>/dashboard.php">Mon Espace</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/vite-gourmand/actions/logout.php">Déconnexion</a>
