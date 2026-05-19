@@ -51,7 +51,24 @@ $stmt->execute([
 ]);
 $stmt = $pdo->prepare("UPDATE menu SET quantite_restante = quantite_restante - 1 WHERE menu_id = ?");
 $stmt->execute([$menu_id]);
+require_once '../includes/mailer.php';
 
+$stmt2 = $pdo->prepare("SELECT * FROM utilisateur WHERE utilisateur_id = ?");
+$stmt2->execute([$utilisateur_id]);
+$userInfo = $stmt2->fetch();
+$orderBody = "
+<h2>Confirmation de votre commande</h2>
+<p>Bonjour <strong>" . htmlspecialchars($userInfo['prenom']) . " " . htmlspecialchars($userInfo['nom']) . "</strong>,</p>
+<p>Votre commande a bien été enregistrée.</p>
+<p><strong>Numéro de commande :</strong> " . $numero_commande . "</p>
+<p><strong>Menu :</strong> " . htmlspecialchars($menu['titre']) . "</p>
+<p><strong>Date de prestation :</strong> " . $date_prestation . "</p>
+<p><strong>Heure :</strong> " . $heure_livraison . "</p>
+<p><strong>Nombre de personnes :</strong> " . $nombre_personne . "</p>
+<p><strong>Prix total :</strong> " . number_format($prix_menu + $prix_livraison, 2) . " €</p>
+<p>À très bientôt,<br>L'équipe Vite & Gourmand</p>
+";
+sendMail($userInfo['email'], 'Confirmation de votre commande - Vite & Gourmand', $orderBody);
 header('Location: /vite-gourmand/espaces/utilisateur/dashboard.php?success=Commande passée avec succès');
 exit;
 ?>
